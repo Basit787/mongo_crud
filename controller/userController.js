@@ -23,7 +23,7 @@ const registerUser = async (req, res) => {
 //get all user
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().select("-__v");
     res.status(200).json({
       status: 200,
       message: "Successfully fetched all users",
@@ -69,7 +69,7 @@ const updateUser = async (req, res) => {
       staus: 201,
       message: "User updated successfully",
       data: updateId,
-    });   
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

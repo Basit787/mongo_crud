@@ -6,13 +6,15 @@ const {
   updateItem,
   deleteItem,
 } = require("../controller/itemController.js");
+const { getAuthMiddleware } = require("../middleware/authMiddleware.js");
+const { isAdmin } = require("../middleware/roleMiddleware.js");
 
 const router = express.Router();
 
-router.post("/item", createItem);
-router.get("/item", getItems);
-router.get("/item/:id", getItemById);
-router.put("/item/:id", updateItem);
-router.delete("/item/:id", deleteItem);
+router.post("/item", getAuthMiddleware, isAdmin, createItem);
+router.get("/item", getAuthMiddleware, getItems);
+router.get("/item/:id", getAuthMiddleware, getItemById);
+router.put("/item/:id", getAuthMiddleware, isAdmin, updateItem);
+router.delete("/item/:id", getAuthMiddleware, isAdmin, deleteItem);
 
 module.exports = router;
